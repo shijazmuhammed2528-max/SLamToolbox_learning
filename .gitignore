@@ -1,0 +1,22 @@
+# ROS2 build artifacts - never commit these
+build/
+install/
+log/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+*.egg
+.eggs/
+
+# VS Code
+.vscode/
+
+# Gazebo / simulation cache
+*.dae.cache
+
+# OS
+.DS_Store
+Thumbs.db

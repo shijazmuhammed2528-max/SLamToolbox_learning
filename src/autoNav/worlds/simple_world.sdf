@@ -1,0 +1,234 @@
+<?xml version="1.0" ?>
+<sdf version="1.8">
+    <world name="four_rooms_world">
+        <!-- Physics Settings -->
+        <physics name="1ms" type="ignored">
+            <max_step_size>0.001</max_step_size>
+            <real_time_factor>1.0</real_time_factor>
+        </physics>
+
+        <!-- Standard Plugins for Gazebo Sim (Harmonic) -->
+        <plugin
+            filename="gz-sim-physics-system"
+            name="gz::sim::systems::Physics">
+        </plugin>
+        <plugin
+            filename="gz-sim-user-commands-system"
+            name="gz::sim::systems::UserCommands">
+        </plugin>
+        <plugin
+            filename="gz-sim-scene-broadcaster-system"
+            name="gz::sim::systems::SceneBroadcaster">
+        </plugin>
+        <plugin
+            filename="gz-sim-sensors-system"
+            name="gz::sim::systems::Sensors">
+            <render_engine>ogre2</render_engine>
+        </plugin>
+
+        <!-- Sun Light -->
+        <light type="directional" name="sun">
+            <cast_shadows>true</cast_shadows>
+            <pose>0 0 15 0 0 0</pose>
+            <diffuse>0.85 0.85 0.85 1</diffuse>
+            <specular>0.2 0.2 0.2 1</specular>
+            <attenuation>
+                <range>1000</range>
+                <constant>0.9</constant>
+                <linear>0.01</linear>
+                <quadratic>0.001</quadratic>
+            </attenuation>
+            <direction>-0.5 0.2 -0.85</direction>
+        </light>
+
+        <!-- Ground Plane -->
+        <model name="ground_plane">
+            <static>true</static>
+            <link name="link">
+                <collision name="collision">
+                    <geometry>
+                        <plane>
+                            <normal>0 0 1</normal>
+                            <size>50 50</size>
+                        </plane>
+                    </geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry>
+                        <plane>
+                            <normal>0 0 1</normal>
+                            <size>50 50</size>
+                        </plane>
+                    </geometry>
+                    <material>
+                        <ambient>0.85 0.85 0.85 1</ambient>
+                        <diffuse>0.85 0.85 0.85 1</diffuse>
+                        <specular>0.2 0.2 0.2 1</specular>
+                    </material>
+                </visual>
+            </link>
+        </model>
+
+        <!-- ============================================== -->
+        <!-- FOUR ROOMS BUILDING (10m x 10m with doorways)  -->
+        <!-- ============================================== -->
+        <model name="four_rooms">
+            <static>true</static>
+            <pose>0 0 0 0 0 0</pose>
+
+            <!-- Outer Wall: North -->
+            <link name="outer_wall_north">
+                <pose>0 5.0 0.5 0 0 0</pose>
+                <collision name="collision">
+                    <geometry><box><size>10.15 0.15 1.0</size></box></geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry><box><size>10.15 0.15 1.0</size></box></geometry>
+                    <material>
+                        <ambient>0.3 0.35 0.4 1</ambient>
+                        <diffuse>0.3 0.35 0.4 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+
+            <!-- Outer Wall: South -->
+            <link name="outer_wall_south">
+                <pose>0 -5.0 0.5 0 0 0</pose>
+                <collision name="collision">
+                    <geometry><box><size>10.15 0.15 1.0</size></box></geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry><box><size>10.15 0.15 1.0</size></box></geometry>
+                    <material>
+                        <ambient>0.3 0.35 0.4 1</ambient>
+                        <diffuse>0.3 0.35 0.4 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+
+            <!-- Outer Wall: East -->
+            <link name="outer_wall_east">
+                <pose>5.0 0 0.5 0 0 0</pose>
+                <collision name="collision">
+                    <geometry><box><size>0.15 10.15 1.0</size></box></geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry><box><size>0.15 10.15 1.0</size></box></geometry>
+                    <material>
+                        <ambient>0.3 0.35 0.4 1</ambient>
+                        <diffuse>0.3 0.35 0.4 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+
+            <!-- Outer Wall: West -->
+            <link name="outer_wall_west">
+                <pose>-5.0 0 0.5 0 0 0</pose>
+                <collision name="collision">
+                    <geometry><box><size>0.15 10.15 1.0</size></box></geometry>
+                </collision>
+                <visual name="visual">
+                    <geometry><box><size>0.15 10.15 1.0</size></box></geometry>
+                    <material>
+                        <ambient>0.3 0.35 0.4 1</ambient>
+                        <diffuse>0.3 0.35 0.4 1</diffuse>
+                    </material>
+                </visual>
+            </link>
+
+            <!-- ===================== -->
+            <!-- INTERIOR WALLS        -->
+            <!-- (Center 0,0 is open)  -->
+            <!-- ===================== -->
+
+            <!-- North Divider Wall (between Room 1 and Room 2) -->
+            <link name="inner_wall_north">
+                <pose>0 3.1 0.5 0 0 0</pose>
+                <collision name="collision"><geometry><box><size>0.15 3.6 1.0</size></box></geometry></collision>
+                <visual name="visual"><geometry><box><size>0.15 3.6 1.0</size></box></geometry>
+                    <material><ambient>0.5 0.55 0.6 1</ambient><diffuse>0.5 0.55 0.6 1</diffuse></material>
+                </visual>
+            </link>
+
+            <!-- South Divider Wall (between Room 3 and Room 4) -->
+            <link name="inner_wall_south">
+                <pose>0 -3.1 0.5 0 0 0</pose>
+                <collision name="collision"><geometry><box><size>0.15 3.6 1.0</size></box></geometry></collision>
+                <visual name="visual"><geometry><box><size>0.15 3.6 1.0</size></box></geometry>
+                    <material><ambient>0.5 0.55 0.6 1</ambient><diffuse>0.5 0.55 0.6 1</diffuse></material>
+                </visual>
+            </link>
+
+            <!-- West Divider Wall (between Room 1 and Room 3) -->
+            <link name="inner_wall_west">
+                <pose>-3.1 0 0.5 0 0 0</pose>
+                <collision name="collision"><geometry><box><size>3.6 0.15 1.0</size></box></geometry></collision>
+                <visual name="visual"><geometry><box><size>3.6 0.15 1.0</size></box></geometry>
+                    <material><ambient>0.5 0.55 0.6 1</ambient><diffuse>0.5 0.55 0.6 1</diffuse></material>
+                </visual>
+            </link>
+
+            <!-- East Divider Wall (between Room 2 and Room 4) -->
+            <link name="inner_wall_east">
+                <pose>3.1 0 0.5 0 0 0</pose>
+                <collision name="collision"><geometry><box><size>3.6 0.15 1.0</size></box></geometry></collision>
+                <visual name="visual"><geometry><box><size>3.6 0.15 1.0</size></box></geometry>
+                    <material><ambient>0.5 0.55 0.6 1</ambient><diffuse>0.5 0.55 0.6 1</diffuse></material>
+                </visual>
+            </link>
+        </model>
+
+        <!-- ============================================== -->
+        <!-- OBSTACLES INSIDE ROOMS (Great for LiDAR & SLAM)-->
+        <!-- ============================================== -->
+
+        <!-- Room 1 (North-West): Central Table / Box -->
+        <model name="room1_table">
+            <static>true</static>
+            <pose>-2.5 2.5 0.3 0 0 0</pose>
+            <link name="link">
+                <collision name="collision"><geometry><box><size>0.8 0.8 0.6</size></box></geometry></collision>
+                <visual name="visual"><geometry><box><size>0.8 0.8 0.6</size></box></geometry>
+                    <material><ambient>0.8 0.2 0.2 1</ambient><diffuse>0.8 0.2 0.2 1</diffuse></material>
+                </visual>
+            </link>
+        </model>
+
+        <!-- Room 2 (North-East): Cylinder Pillar -->
+        <model name="room2_pillar">
+            <static>true</static>
+            <pose>2.5 2.5 0.4 0 0 0</pose>
+            <link name="link">
+                <collision name="collision"><geometry><cylinder><radius>0.35</radius><length>0.8</length></cylinder></geometry></collision>
+                <visual name="visual"><geometry><cylinder><radius>0.35</radius><length>0.8</length></cylinder></geometry>
+                    <material><ambient>0.2 0.3 0.8 1</ambient><diffuse>0.2 0.3 0.8 1</diffuse></material>
+                </visual>
+            </link>
+        </model>
+
+        <!-- Room 3 (South-West): Storage Box -->
+        <model name="room3_box">
+            <static>true</static>
+            <pose>-2.5 -2.5 0.35 0 0 0</pose>
+            <link name="link">
+                <collision name="collision"><geometry><box><size>0.7 1.0 0.7</size></box></geometry></collision>
+                <visual name="visual"><geometry><box><size>0.7 1.0 0.7</size></box></geometry>
+                    <material><ambient>0.2 0.7 0.3 1</ambient><diffuse>0.2 0.7 0.3 1</diffuse></material>
+                </visual>
+            </link>
+        </model>
+
+        <!-- Room 4 (South-East): Small Pillar -->
+        <model name="room4_pillar">
+            <static>true</static>
+            <pose>2.5 -2.5 0.4 0 0 0</pose>
+            <link name="link">
+                <collision name="collision"><geometry><cylinder><radius>0.3</radius><length>0.8</length></cylinder></geometry></collision>
+                <visual name="visual"><geometry><cylinder><radius>0.3</radius><length>0.8</length></cylinder></geometry>
+                    <material><ambient>0.8 0.6 0.1 1</ambient><diffuse>0.8 0.6 0.1 1</diffuse></material>
+                </visual>
+            </link>
+        </model>
+
+    </world>
+</sdf>
